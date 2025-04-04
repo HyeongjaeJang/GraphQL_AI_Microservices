@@ -1,0 +1,12 @@
+query Posts {
+  posts {
+    _id
+    Author
+    Title
+    Content
+    Category
+    AiSummary
+    createdAt
+    updatedAt
+  }
+}

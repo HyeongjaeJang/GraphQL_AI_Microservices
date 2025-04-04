@@ -1,0 +1,3 @@
+mutation DeleteHelp($id: String!) {
+  deleteHelp(id: $id)
+}

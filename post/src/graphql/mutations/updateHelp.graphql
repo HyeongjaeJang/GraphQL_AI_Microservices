@@ -1,0 +1,12 @@
+mutation UpdateHelp($input: HelpInput!, $id: String!) {
+  updateHelp(input: $input, id: $id) {
+    _id
+    Author
+    Description
+    Location
+    isResolved
+    volunteers
+    createdAt
+    updatedAt
+  }
+}

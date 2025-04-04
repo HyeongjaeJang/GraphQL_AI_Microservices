@@ -1,0 +1,12 @@
+mutation CreateHelp($input: HelpInput!) {
+  createHelp(input: $input) {
+    _id
+    Author
+    Description
+    Location
+    isResolved
+    volunteers
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,19 @@
+query CommunityAIQuery($input: String!) {
+  communityAIQuery(input: $input) {
+    text
+    suggestedQuestions
+    retrievedPosts {
+      _id
+      Author
+      Title
+      Content
+      Category
+    }
+    retrievedHelps {
+      _id
+      Author
+      Description
+      Location
+    }
+  }
+}

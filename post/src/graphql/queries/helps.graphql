@@ -1,0 +1,13 @@
+query Helps {
+  helps {
+    _id
+    Author
+    Description
+    Location
+    isResolved
+    volunteers
+    volunteersIds
+    createdAt
+    updatedAt
+  }
+}

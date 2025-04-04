@@ -1,0 +1,12 @@
+mutation UpdatePost($input: PostInput!, $id: String!) {
+  updatePost(input: $input, id: $id) {
+    _id
+    Author
+    Title
+    Content
+    Category
+    AiSummary
+    createdAt
+    updatedAt
+  }
+}
