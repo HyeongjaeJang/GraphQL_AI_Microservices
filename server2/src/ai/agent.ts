@@ -33,6 +33,7 @@ export async function communityAIQuery(input: string, userId: string) {
         },
       }),
   );
+
   const helps = await HelpModel.find().lean();
 
   const helpDocs = helps.map(

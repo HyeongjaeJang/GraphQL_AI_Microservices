@@ -39,7 +39,7 @@ const link = split(
     ) {
       if (
         definition.name?.value === "Login" ||
-        definition.name?.value === "Register" ||
+        definition.name?.value === "SignUp" ||
         definition.name?.value === "Logout"
       ) {
         return true;

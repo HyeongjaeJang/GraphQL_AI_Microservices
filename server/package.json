@@ -13,7 +13,8 @@
   "description": "",
   "dependencies": {
     "@apollo/server": "^4.11.3",
-    "@apollo/subgraph": "^2.10.0",
+    "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.1",
+    "@apollo/subgraph": "^2.10.1",
     "@typegoose/typegoose": "^12.10.1",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",

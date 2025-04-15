@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express, { Application } from "express";
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@apollo/server/express4";
 import { buildSchema } from "type-graphql";
 import Redis from "ioredis";
 import cors from "cors";
@@ -8,8 +9,9 @@ import session from "express-session";
 import { RedisStore } from "connect-redis";
 import { mongodb } from "./config/mongodb";
 import bodyParser from "body-parser";
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "@apollo/server-plugin-landing-page-graphql-playground";
 import { UserResolver } from "./resolver/user";
+import { MyContext } from "./types/context";
 
 const main = async () => {
   mongodb();
@@ -68,30 +70,22 @@ const main = async () => {
       validate: false,
     }),
     cache: "bounded",
-    context: ({ req, res }) => {
-      return {
-        req,
-        res,
-        redis,
-      };
-    },
     introspection: true,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   });
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({
-    app: app as any,
-    cors: {
-      origin: [
-        "http://localhost:3000",
-        "http://localhost:3002",
-        "http://localhost:4001",
-      ],
-      credentials: true,
-    },
-  });
+  app.use(
+    "/graphql",
+    expressMiddleware(apolloServer, {
+      context: async ({ req, res }) => ({
+        req,
+        res,
+        redis,
+      }),
+    }) as any,
+  );
 
   app.listen(4000, () => {
     console.log("Server started on http://localhost:4000");
