@@ -11,7 +11,6 @@ import { mongodb } from "./config/mongodb";
 import bodyParser from "body-parser";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "@apollo/server-plugin-landing-page-graphql-playground";
 import { UserResolver } from "./resolver/user";
-import { MyContext } from "./types/context";
 
 const main = async () => {
   mongodb();
