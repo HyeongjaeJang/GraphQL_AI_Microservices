@@ -1,9 +1,8 @@
 import "dotenv/config";
 import { plainToInstance } from "class-transformer";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { Document } from "langchain/document";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { Post, PostModel } from "../models/Post";
 import { Help, HelpModel } from "../models/Help";
 import { InteractionModel, storeInteraction } from "../models/Interaction";
@@ -12,9 +11,10 @@ import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createRetrievalChain } from "langchain/chains/retrieval";
 import { PromptTemplate } from "@langchain/core/prompts";
 
-const llm = new ChatGoogleGenerativeAI({
-  model: "gemini-1.5-pro",
-  apiKey: process.env.GEMINI_API_KEY,
+const llm = new ChatOpenAI({
+  model: "gpt-4o",
+  apiKey: process.env.OPENAI_API_KEY,
+  temperature: 0,
 });
 
 export async function communityAIQuery(input: string, userId: string) {
@@ -54,7 +54,7 @@ export async function communityAIQuery(input: string, userId: string) {
 
   const vectorStore = await MemoryVectorStore.fromDocuments(
     allDocs,
-    new GoogleGenerativeAIEmbeddings({ apiKey: process.env.GEMINI_API_KEY }),
+    new OpenAIEmbeddings({ apiKey: process.env.OPENAI_API_KEY }),
   );
 
   const retriever = vectorStore.asRetriever();
@@ -80,13 +80,19 @@ export async function communityAIQuery(input: string, userId: string) {
   ]);
 
   const prompt = PromptTemplate.fromTemplate(
-    `You are an AI assistant. Given the following context, answer the user's question accurately.
+    `You are an AI assistant for a community platform. 
+Use ONLY the information provided in the "Context" below to answer the user's question. 
+Do NOT use any external knowledge, assumptions, or general information. 
+If the context does not contain enough information to answer, reply with:
+"I couldn't find relevant information in the available data."
 
-  Context:
-  {context}
+Context:
+{context}
 
-  Question:
-  {input}`,
+Question:
+{input}
+
+Answer:`,
   );
 
   const combineDocsChain = await createStuffDocumentsChain({

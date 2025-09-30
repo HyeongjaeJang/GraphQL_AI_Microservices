@@ -20,6 +20,7 @@
     "@graphql-tools/load": "^8.0.19",
     "@langchain/core": "^0.3.43",
     "@langchain/google-genai": "^0.2.0",
+    "@langchain/openai": "^0.6.14",
     "@typegoose/typegoose": "^12.13.0",
     "@types/cookie-parser": "^1.4.8",
     "@types/express-session": "^1.18.1",
@@ -40,6 +41,7 @@
     "langsmith": "^0.3.15",
     "mongoose": "^8.12.1",
     "nodemon": "^3.1.9",
+    "openai": "^5.23.1",
     "querystring": "^0.2.1",
     "type-graphql": "^2.0.0-rc.2"
   },
